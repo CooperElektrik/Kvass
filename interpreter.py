@@ -111,9 +111,6 @@ class Interpreter:
 
     def end(self):
         raise NotImplementedError("end not implemented")
-    
-    def run(self):
-        raise NotImplementedError("run not implemented")
 
 
 class InteractiveInterpreter(Interpreter):
