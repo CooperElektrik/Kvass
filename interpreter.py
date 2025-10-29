@@ -1,6 +1,6 @@
 import json
 import sys
-from json_canvas.graph import CanvasGraph, TextNode, FileNode, GroupNode, LinkNode
+from .json_canvas.graph import CanvasGraph, TextNode, FileNode, GroupNode, LinkNode
 
 class Interpreter:
     def __init__(self, story_graph: CanvasGraph):
