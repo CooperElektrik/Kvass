@@ -12,13 +12,16 @@ class Interpreter:
     Kvass interpreter.
     """
 
-    def __init__(self, graph: CanvasGraph):
-        self.graph = graph 
+    def __init__(self):
+        self.graph: CanvasGraph = None 
         self.current_node: Optional[Node] = None 
         self.is_started: bool = False 
         self.is_waiting_for_choice: bool = False
         self.is_finished: bool = False
         self.available_choices: List[Tuple[str, Node]] = []
+        
+    def set_graph(self, graph: CanvasGraph):
+        self.graph = graph
 
     def start(self, node_id: str | None = None):
         if node_id:
@@ -166,5 +169,6 @@ if __name__ == "__main__":
 
     canvas_data = json.loads(canvas_data)
     graph = CanvasGraph(canvas_data)
-    interpreter = InteractiveInterpreter(graph)
+    interpreter = InteractiveInterpreter()
+    interpreter.set_graph(graph)
     interpreter.run()
