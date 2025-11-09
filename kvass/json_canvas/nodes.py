@@ -22,15 +22,3 @@ class TextNode(Node):
 class FileNode(Node):
     file: str = ""
     subpath: Optional[str] = None
-
-
-@dataclass
-class LinkNode(Node):
-    url: str = ""
-
-
-@dataclass
-class GroupNode(Node):
-    label: Optional[str] = ""
-    background: Optional[str] = ""
-    backgroundStyle: Optional[str] = ""

@@ -3,9 +3,9 @@ import sys
 from time import sleep
 from typing import Optional, List, Tuple
 try:
-    from .json_canvas.graph import CanvasGraph, TextNode, FileNode, GroupNode, LinkNode, Node
+    from .json_canvas.graph import CanvasGraph, TextNode, FileNode, Node
 except ImportError:
-    from json_canvas.graph import CanvasGraph, TextNode, FileNode, GroupNode, LinkNode, Node
+    from json_canvas.graph import CanvasGraph, TextNode, FileNode, Node
 
 class Interpreter:
     """
@@ -49,10 +49,6 @@ class Interpreter:
                 self.do_text(self.current_node)
             elif isinstance(self.current_node, FileNode):
                 self.do_file(self.current_node)
-            elif isinstance(self.current_node, LinkNode):
-                self.do_link(self.current_node)
-            elif isinstance(self.current_node, GroupNode):
-                self.do_group(self.current_node)
             else:
                 raise ValueError(f"Unknown node type: {type(self.current_node)}")
 
@@ -103,12 +99,6 @@ class Interpreter:
     def do_file(self, node: FileNode):
         raise NotImplementedError("do_file not implemented")
 
-    def do_link(self, node: LinkNode):
-        raise NotImplementedError("do_link not implemented")
-
-    def do_group(self, node: GroupNode):
-        raise NotImplementedError("do_group not implemented")
-
     def do_choice(self, choices: List[Tuple[str, Node]]):
         raise NotImplementedError("do_choice not implemented")
 
@@ -122,13 +112,7 @@ class InteractiveInterpreter(Interpreter):
 
     def do_file(self, node: FileNode):
         print(f"FILE: {node.file}")
-
-    def do_link(self, node: LinkNode):
-        print(f"LINK: {node.url}")
-
-    def do_group(self, node: GroupNode):
-        print(f"GROUP: {node.label}")
-
+        
     def do_choice(self, choices: List[Tuple[str, Node]]):
         print("\nMake a choice:")
         for i, (label, _) in enumerate(choices):

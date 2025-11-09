@@ -1,13 +1,11 @@
 from collections import defaultdict
 from typing import List, Dict, Optional, Any, Tuple
-from .nodes import Node, TextNode, FileNode, LinkNode, GroupNode
+from .nodes import Node, TextNode, FileNode
 from .edges import Edge
 
 NODE_TYPE_MAP = {
     "text": TextNode,
     "file": FileNode,
-    "link": LinkNode,
-    "group": GroupNode,
 }
 
 
@@ -46,7 +44,7 @@ class CanvasGraph:
         return [
             node
             for node_id, node in self.nodes.items()
-            if node_id not in destination_node_ids and node.type != "group"
+            if node_id not in destination_node_ids
         ]
 
     def get_next_steps(self, current_node_id: str) -> List[Tuple[Optional[str], Node]]:
