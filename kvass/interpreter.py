@@ -46,9 +46,9 @@ class Interpreter:
             self.on_node_enter(self.current_node)
 
             if isinstance(self.current_node, TextNode):
-                self.do_text(self.current_node)
+                self.handle_text(self.current_node)
             elif isinstance(self.current_node, FileNode):
-                self.do_file(self.current_node)
+                self.handle_file(self.current_node)
             else:
                 raise ValueError(f"Unknown node type: {type(self.current_node)}")
 
@@ -68,7 +68,7 @@ class Interpreter:
             else:
                 self.available_choices = next_steps
                 self.is_waiting_for_choice = True
-                self.do_choice(self.available_choices)
+                self.handle_choice(self.available_choices)
             
             break
     
@@ -93,27 +93,27 @@ class Interpreter:
     def on_node_exit(self, node: Node):
         pass
 
-    def do_text(self, node: TextNode):
-        raise NotImplementedError("do_text not implemented")
+    def handle_text(self, node: TextNode):
+        raise NotImplementedError("handle_text not implemented")
 
-    def do_file(self, node: FileNode):
-        raise NotImplementedError("do_file not implemented")
+    def handle_file(self, node: FileNode):
+        raise NotImplementedError("handle_file not implemented")
 
-    def do_choice(self, choices: List[Tuple[str, Node]]):
-        raise NotImplementedError("do_choice not implemented")
+    def handle_choice(self, choices: List[Tuple[str, Node]]):
+        raise NotImplementedError("handle_choice not implemented")
 
     def end(self):
         raise NotImplementedError("end not implemented")
 
 
 class InteractiveInterpreter(Interpreter):
-    def do_text(self, node: TextNode):
+    def handle_text(self, node: TextNode):
         print(f"TEXT: {node.text}")
 
-    def do_file(self, node: FileNode):
+    def handle_file(self, node: FileNode):
         print(f"FILE: {node.file}")
         
-    def do_choice(self, choices: List[Tuple[str, Node]]):
+    def handle_choice(self, choices: List[Tuple[str, Node]]):
         print("\nMake a choice:")
         for i, (label, _) in enumerate(choices):
             print(f"{i + 1}. {label}")
@@ -138,7 +138,7 @@ class InteractiveInterpreter(Interpreter):
         while not self.is_finished:
             sleep(1)
             if self.is_waiting_for_choice:
-                self.do_choice(self.available_choices)
+                self.handle_choice(self.available_choices)
             else:
                 self.step()
                 
